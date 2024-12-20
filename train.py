@@ -52,7 +52,7 @@ UseNestedQuant = False
 OutputDir = "./results"
 
 # Number of training epochs
-NumTrainEpochs = 2
+NumTrainEpochs = 3
 
 # Enable fp16/bf16 training
 fp16 = False
@@ -103,6 +103,7 @@ Packing = False
 DeviceMap = {"": 0}
 
 dataset = load_dataset(DatasetName, split='train')
+dataset = dataset.select(range(2**14))
 
 CompDtype = getattr(torch, Bnb4bitQuantDType)
 
