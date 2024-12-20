@@ -1,5 +1,9 @@
+from argparse import ArgumentParser
+
+parser = ArgumentParser()
+parser.add_argument('--key', dest='Key')
 from huggingface_hub import HfFolder, whoami
-hf_token = "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"
+hf_token = parser.parse_args().Key
 HfFolder.save_token(hf_token)
 
 user = whoami()
@@ -55,7 +59,7 @@ fp16 = False
 bf16 = False
 
 # Batch Size
-PerDevice = 1
+PerDevice = 2
 PerDeviceEval = 1
 
 # Gradient Accumalation
@@ -99,7 +103,6 @@ Packing = False
 DeviceMap = {"": 0}
 
 dataset = load_dataset(DatasetName, split='train')
-dataset = dataset.select(range(10000))
 
 CompDtype = getattr(torch, Bnb4bitQuantDType)
 
