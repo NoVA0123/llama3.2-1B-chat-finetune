@@ -103,8 +103,7 @@ Packing = False
 DeviceMap = {"": 0}
 
 dataset = load_dataset(DatasetName, split='train')
-#dataset = dataset.select(range(2**14))
-dataset = dataset.select(range(2))
+dataset = dataset.select(range(2**14))
 
 
 CompDtype = getattr(torch, Bnb4bitQuantDType)
@@ -214,7 +213,7 @@ tokenizer.padding_side = "right"
 import locale
 locale.getpreferredencoding = lambda: "UTF-8"
 
-#model.push_to_hub("N0v4123/llama-3.2-1B-chat-finetune", check_pr=True)
+model.push_to_hub("N0v4123/llama-3.2-1B-chat-finetune", check_pr=True)
 
-#tokenizer.push_to_hub("N0v4123/llama-3.2-1B-chat-finetune",check_pr=True)
+tokenizer.push_to_hub("N0v4123/llama-3.2-1B-chat-finetune",check_pr=True)
 print("\n\nProcess is sucessfully finished")
