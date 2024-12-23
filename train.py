@@ -15,11 +15,11 @@ from datasets import load_dataset
 from transformers import (
 AutoModelForCausalLM,
 AutoTokenizer,
+pipeline,
 BitsAndBytesConfig,
 logging)
 from peft import LoraConfig, PeftModel
 from trl import SFTTrainer, SFTConfig
-from langchain import PromptTemplate, LLMChain
 
 
 DatasetName = "N0v4123/ultrachat-10k-chatml-llama-3.2"
@@ -178,29 +178,17 @@ model = AutoModelForCausalLM.from_pretrained(ModelName)
 logging.set_verbosity(logging.CRITICAL)
 
 # Run text generation pipeline with our next model
-'''prompt = "What is a large language model?"
+prompt = {"role": "user", "content": "What is a large language model?"}
 pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, max_length=200)
 result = pipe(prompt)
 #print(result[0]['generated_text'])
-print(result[0]['generated_text'])
+print(result[0]['generated_text'][-1]['content'])
 
-print(type(result[0]['generated_text']))'''
-question = "What is a large language model?"
-template = """
-Question: {question}
-Answer: Let's think step by step.
-"""
-prompt = PromptTemplate(template=template, input_variables=['question'])
-print(prompt)
-
-
-llm_chain = LLMChain(llm=model, prompt=prompt)
-print(llm_chain.invoke(question)['text'])
-print(type(llm_chain.invoke(question)['text']))
+print(type(result[0]['generated_text'][-1]['content']))
 
 # Empty VRAM
 del model
-#del pipe
+del pipe
 del trainer
 import gc
 gc.collect()
