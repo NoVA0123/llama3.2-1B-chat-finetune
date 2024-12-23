@@ -178,7 +178,7 @@ model = AutoModelForCausalLM.from_pretrained(ModelName)
 logging.set_verbosity(logging.CRITICAL)
 
 # Run text generation pipeline with our next model
-prompt = {"role": "user", "content": "What is a large language model?"}
+prompt = [{"role": "user", "content": "What is a large language model?"}]
 pipe = pipeline(task="text-generation", model=model, tokenizer=tokenizer, max_length=200)
 result = pipe(prompt)
 #print(result[0]['generated_text'])
